@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+
+if(!isset($_SESSION['usuario'])){
+    header('Location: index.php?error=1');
+}
+
+?>
+
 <!DOCTYPE HTML>
 <html lang="pt-br">
 	<head>
@@ -12,6 +22,8 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	
 	</head>
+
+
 
 	<body>
 
@@ -30,7 +42,7 @@
 	        
 	        <div id="navbar" class="navbar-collapse collapse">
 	          <ul class="nav navbar-nav navbar-right">
-	            <li><a href="#">Sair</a></li>
+	            <li><a href="sair.php">Sair</a></li>
 	          </ul>
 	        </div><!--/.nav-collapse -->
 	      </div>
@@ -44,6 +56,10 @@
 	    	<div class="col-md-4"></div>
 	    	<div class="col-md-4">
 	    		<h3> Usuário autenticado</h3>
+                <br/>
+                <?= $_SESSION['usuario']  ?>
+                <br/>
+                <?= $_SESSION ['email'] ?>
 			</div>
 			<div class="col-md-4"></div>
 
