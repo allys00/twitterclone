@@ -1,10 +1,10 @@
 <?php
+	
+	session_start();
 
-session_start();
-
-if(!isset($_SESSION['usuario'])){
-    header('Location: index.php?error=1');
-}
+	if(!isset($_SESSION['usuario'])){
+		header('Location: index.php?erro=1');
+	}
 
 ?>
 
@@ -21,7 +21,7 @@ if(!isset($_SESSION['usuario'])){
 		<!-- bootstrap - link cdn -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	
-       <script type="text/javascript">
+		<script type="text/javascript">
 
 			$(document).ready( function(){
 
@@ -34,20 +34,33 @@ if(!isset($_SESSION['usuario'])){
 							url: 'inclui_tweet.php',
 							method: 'post',
 							data: $('#form_tweet').serialize(),
-							success: function(data) {   
+							success: function(data) {
 								$('#texto_tweet').val('');
-                                alert('Tweet incluido com Sucesso!');
+								atualizaTweet();
 							}
 						});
 					}
 
 				});
-            });
+
+				function atualizaTweet(){
+					//carregar os tweets 
+
+					$.ajax({
+						url: 'get_tweet.php',
+						success: function(data) {
+							$('#tweets').html(data);
+						}
+					});
+				}
+
+				atualizaTweet();
+
+			});
 
 		</script>
+
 	</head>
-
-
 
 	<body>
 
@@ -74,46 +87,45 @@ if(!isset($_SESSION['usuario'])){
 
 
 	    <div class="container">
-	    	
 	    	<div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                         <h4><?= $_SESSION['usuario']  ?></h4>
+	    		<div class="panel panel-default">
+	    			<div class="panel-body">
+	    				<h4><?= $_SESSION['usuario'] ?></h4>
 
-                         <br/>
-                         <div class="col-md-6">
-                            TWEETS <br/> 1
-                         </div>
-
-                         <div class="col-md-6">
-                            SEGUIDORES <br/>1
-
-                         </div>
-                    </div>
-                </div>
-            </div>
+	    				<hr />
+	    				<div class="col-md-6">
+	    					TWEETS <br /> 1
+	    				</div>
+	    				<div class="col-md-6">
+	    					SEGUIDORES <br /> 1
+	    				</div>
+	    			</div>
+	    		</div>
+	    	</div>
+	    	
 	    	<div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                   	<form id="form_tweet" class="input-group">
+	    		<div class="panel panel-default">
+	    			<div class="panel-body">
+	    				<form id="form_tweet" class="input-group">
 	    					<input type="text" id="texto_tweet" name="texto_tweet" class="form-control" placeholder="O que está acontecendo agora?" maxlength="140" />
 	    					<span class="input-group-btn">
 	    						<button class="btn btn-default" id="btn_tweet" type="button">Tweet</button>
 	    					</span>
 	    				</form>
-                    </div>
-                </div>
-	    		
-               
+	    			</div>
+	    		</div>
+
+	    		<div id="tweets" class="list-group"></div>
+
 			</div>
 			<div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <h4><a href="#">Procurar por pessoas</a> </h4>
-                    </div>
-                </div>
-            </div>
-        </div>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<h4><a href="#">Procurar por pessoas</h4>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
 	    </div>
