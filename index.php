@@ -1,6 +1,6 @@
 <?php
 
-$erro = isset($_GET['erro']) ? $_GET['erro'] : 0;
+	$erro = isset($_GET['erro']) ? $_GET['erro'] : 0;
 
 ?>
 
@@ -19,34 +19,30 @@ $erro = isset($_GET['erro']) ? $_GET['erro'] : 0;
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	
 		<script>
-				$(document).ready(function(){
+			$(document).ready( function(){
 
+				//verificar se os campos de usuário e senha foram devidamente preenchidos
+				$('#btn_login').click(function(){
 
-						$('#btn_login').click(function(){
+					var campo_vazio = false;
 
-							var campo_vazio = false;
+					if($('#campo_usuario').val() == ''){
+						$('#campo_usuario').css({'border-color': '#A94442'});
+						campo_vazio = true;
+					} else {
+						$('#campo_usuario').css({'border-color': '#CCC'});
+					}
 
-							if($('#campo_usuario').val() == ''){
-									$('#campo_usuario').css({'border-color' :'red'});
-									campo_vazio = true;
-								}else{
-										$('#campo_usuario').css({'border-color' :'#ccc'});
-								}
+					if($('#campo_senha').val() == ''){
+						$('#campo_senha').css({'border-color': '#A94442'});
+						campo_vazio = true;
+					} else {
+						$('#campo_senha').css({'border-color': '#CCC'});
+					}
 
-							if ($('#campo_senha').val() == ''){
-									$('#campo_senha').css({'border-color':'red'});
-									campo_vazio = true;
-							}else{
-										$('#campo_senha').css({'border-color' :'#ccc'});
-								}
-
-							if (campo_vazio) return false;
-
-						});
-
-					});
-
-
+					if(campo_vazio) return false;
+				});
+			});					
 		</script>
 	</head>
 
@@ -88,11 +84,13 @@ $erro = isset($_GET['erro']) ? $_GET['erro'] : 0;
 								<br /><br />
 								
 							</form>
-							<?php 
+
+							<?php
 								if($erro == 1){
-									echo '<font color="#ff0000">Usuario ou senha invalido</font>';
+									echo '<font color="#FF0000">Usuário e ou senha inválido(s)</font>';
 								}
 							?>
+
 						</form>
 				  	</ul>
 	            </li>
